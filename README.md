@@ -15,4 +15,4 @@ EXE файл можно скачать в релизах или собрать �
 
 Собрать можно через pyinstaller:
 
-pyinstaller -F -w main.py
+pyinstaller -F -w -i icon.ico main.py
