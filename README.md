@@ -5,7 +5,8 @@
 
 Написано на python с использованием tkinter
 
-![изображение](https://user-images.githubusercontent.com/104437646/165305106-f3b401e7-9150-4027-914e-282743311a96.png)
+![image](https://user-images.githubusercontent.com/104437646/166110757-7bf91dae-fed5-4b56-9e17-1a23aa49feb0.png)
+
 
 # Как получить EXE файл
 
