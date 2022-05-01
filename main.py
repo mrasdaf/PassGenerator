@@ -14,6 +14,9 @@ window.geometry("475x675")
 window.config(bg="black")
 window.resizable(width=False, height=False)
 
+themec = StringVar()
+themec.set("OFF")
+
 
 
 countOfPasswordsLabel = Label(window, text="Кол-во паролей:", bg="black", fg="white", font=("Comic Sans MS", 14))
@@ -83,6 +86,32 @@ def saveresult():
             f.close()
     except:
         return False
+def switchtheme():
+    if themec.get() == "ON":
+        # Включаем светлую тему
+        window.config(bg = "white")
+        generateButton.config(bg = "white", fg="black")
+        aboutButton.config(bg = "white", fg="black")
+        githublink.config(bg = "white", fg="black")
+        savebutton.config(bg = "white", fg="black")
+        countOfPasswordsLabel.config(bg = "white", fg="black")
+        countOfPasswordsEntry.config(bg = "white", fg="black")
+        onePassLenLabel.config(bg = "white", fg="black")
+        onePassLenEntry.config(bg = "white", fg="black")
+        resultText.config(bg = "white", fg="black")
+    if themec.get() == "OFF":
+        # Выключаем светлую тему
+        window.config(bg = "black")
+        generateButton.config(bg = "grey", fg="white")
+        aboutButton.config(bg = "grey", fg="white")
+        githublink.config(bg = "grey", fg="white")
+        savebutton.config(bg = "grey", fg="white")
+        countOfPasswordsLabel.config(bg = "black", fg="white")
+        countOfPasswordsEntry.config(bg = "black", fg="white")
+        onePassLenLabel.config(bg = "black", fg="white")
+        onePassLenEntry.config(bg = "black", fg="white")
+        resultText.config(bg = "grey", fg="white")
+
 generateButton = Button(window, text="Сгенерировать", width=58, command=generateButtonClick, bg="grey", fg="white")
 generateButton.place(x=31, y=150)
 
@@ -95,8 +124,11 @@ aboutButton.place(x=350, y=643)
 githublink = Button(window, text="Github", width=15, command=githubclick, font=("Comic Sans MS", 9), bg="grey", fg="white")
 githublink.place(x=220, y=643)
 
-githublink = Button(window, text="Сохранить результат", width=20, command=saveresult, font=("Comic Sans MS", 9), bg="grey", fg="white")
-githublink.place(x=60, y=643)
+savebutton = Button(window, text="Сохранить результат", width=20, command=saveresult, font=("Comic Sans MS", 9), bg="grey", fg="white")
+savebutton.place(x=60, y=643)
+
+selecttheme = Checkbutton(window, text="Светлая тема", command=switchtheme, width=20, font=("Comic Sans MS", 9), bg="grey", fg="black", variable=themec, onvalue="ON", offvalue="OFF")
+selecttheme.place(x=300, y=10)
 
 
 window.mainloop()
