@@ -9,17 +9,17 @@
 
 # Системные требования
 1. При запуске из .py файла
-> ОС: Любая *(тестировалось на Windows)*
-> Python 3.7+
-> Для сборки EXE требуется модуль *pyinstaller*
+ОС: Любая *(тестировалось на Windows)*
+Python 3.7+
+Для сборки EXE требуется модуль *pyinstaller*
 
 2. При запуске из EXE файла
-> ОС: Windows 10
-> Установка Python не требуется
+ОС: Windows 10
+Установка Python не требуется
 
 # Сборка
 1. Установить модуль *pyinstaller*, если он еще не установлен:
-<pip install pyinstaller>
+`pip install pyinstaller`
 2. Собрать приложение:
-<pyinstaller -F -w -i icon.ico main.py>
+`pyinstaller -F -w -i icon.ico main.py`
 Полученный файл будет лежать в папке **dist**
