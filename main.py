@@ -5,8 +5,28 @@ import random
 import webbrowser
 from tkinter import scrolledtext
 
+import json
+from os import path, getenv, mkdir
+
+pp = getenv('APPDATA') + "\\PassGenerator\\"
+if not path.isdir(getenv('APPDATA') + "\\PassGenerator"):
+    mkdir(getenv('APPDATA') + "\\PassGenerator")
+if not path.isfile(pp + "settings.json"):
+    settings = {
+        "theme": "dark"
+    }
+    with open(pp + "settings.json", "w") as f:
+        json.dump(settings, f)
+        f.close()
+
+        
+with open(pp + "settings.json", "r") as f:
+    settings = json.load(f)
+    
+
+
 randomsymbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-onePassLen = 1
+
 
 window = Tk()
 window.title("Password Generator by mrasdaf")
@@ -22,48 +42,55 @@ themec.set("OFF")
 countOfPasswordsLabel = Label(window, text="Кол-во паролей:", bg="black", fg="white", font=("Comic Sans MS", 14))
 countOfPasswordsLabel.place(x=30, y=50)
 
-countOfPasswordsEntry = Entry(window, font=("Comic Sans MS", 14), bg="grey", fg="white")
+countOfPasswordsEntry = Entry(window, font=("Comic Sans MS", 14), bg="#adadad", fg="white")
 countOfPasswordsEntry.place(x=200, y=50)
 
-onePassLenEntry = Entry(window, font=("Comic Sans MS", 14), bg="grey", fg="white")
+onePassLenEntry = Entry(window, font=("Comic Sans MS", 14), bg="#adadad", fg="white")
 onePassLenEntry.place(x=200, y=100)
 
-onePassLenLabel = Label(window, text="Кол-во символов в 1 пароле:", bg="black", fg="white", font="Arial 9")
+onePassLenLabel = Label(window, text="Кол-во символов в 1 пароле:", bg="black", fg="white", font=("Comic Sans MS", 8))
 onePassLenLabel.place(x=30, y=103)
 
 def generateButtonClick():
-    global randomsymbol
-    global onePassLen
-    cp = 0
-    resultText.delete(1.0, "end")
+    global randomsymbol # Делаем глобальными переменную с символами
     try:
-        cp = int(countOfPasswordsEntry.get())
+        PasswordCount = int(countOfPasswordsEntry.get()) # Пробуем получить число паролей
     except:
-        resultText.insert(1.0, "Не удалось распознать число паролей!")
+        messagebox.showerror("Ошибка", "Введите корректное кол-во паролей!") # Ошибка
         return False
     try:
-        onePassLen = int(onePassLenEntry.get())
+        onePassLen = int(onePassLenEntry.get()) # Получаем кол-во символов
     except:
-        resultText.insert(1.0, "Не удалось распознать число символов в 1 пароле!")
+        messagebox.showerror("Ошибка", "Введите корректное кол-во символов в одном пароле!") # Ошибка
         return False
-    i = 1
-    outputStr = ""
-    res = ""
-    outputStrFULL = ""
-    while i <= cp:
-        res = res + "\n"
-        for u in range(onePassLen):
-            res = res + random.choice(randomsymbols)
-        outputStrFULL = outputStr + res + "\n"
+    if PasswordCount <= 0:
+        messagebox.showerror("Ошибка", "Введите положительное целое число!")
+        return False
+    if onePassLen <= 0:
+        messagebox.showerror("Ошибка", "Введите положительное целое число!")
+        return False
+    savebutton.config(state=DISABLED)
+    resultText.config(state=NORMAL)
+    resultText.delete(1.0, "end") # Очищаем вывод
+    resultText.config(state=DISABLED)
+    i = 1 # Определяем счетчик
+    res = "" # Создаем пустой результат
+    while i <= PasswordCount: # Пока не создадим 1 пароль
+        for u in range(onePassLen): # Пока не сгенерируем нужное количество символов
+            res = res + random.choice(randomsymbols) # Генерация строки с 1 паролем
+        res = res + "\n" # Добавление переноса строки
         i += 1
-        outputStr = ""
-    resultText.insert(1.0, outputStrFULL)
+    resultText.config(state=NORMAL)
+    resultText.insert(1.0, res) # Вставка в вывод
+    resultText.config(state=DISABLED)
+    savebutton.config(state=NORMAL)
     
 def aboutButtonClick():
-    messagebox.showinfo("О программе", """
-Эта программа позволяет вам генерировать пароли.
+    messagebox.showinfo("О программе", """Эта программа позволяет вам генерировать пароли.
 Программа выбирает случайные символы из последовательности знаков и после чего выводит результат.
     
+Настройки приложения находятся в %appdata%/settings.json
+
 by mrasdaf
 Написано на Python
     """)
@@ -99,36 +126,47 @@ def switchtheme():
         onePassLenLabel.config(bg = "white", fg="black")
         onePassLenEntry.config(bg = "white", fg="black")
         resultText.config(bg = "white", fg="black")
+        settings["theme"] = "light"
+        with open(pp + "settings.json", "w") as f:
+            json.dump(settings, f)            
     if themec.get() == "OFF":
         # Выключаем светлую тему
         window.config(bg = "black")
-        generateButton.config(bg = "grey", fg="white")
-        aboutButton.config(bg = "grey", fg="white")
-        githublink.config(bg = "grey", fg="white")
-        savebutton.config(bg = "grey", fg="white")
+        generateButton.config(bg = "#adadad", fg="white")
+        aboutButton.config(bg = "#adadad", fg="white")
+        githublink.config(bg = "#adadad", fg="white")
+        savebutton.config(bg = "#adadad", fg="white")
         countOfPasswordsLabel.config(bg = "black", fg="white")
-        countOfPasswordsEntry.config(bg = "black", fg="white")
+        countOfPasswordsEntry.config(bg = "#adadad", fg="white")
         onePassLenLabel.config(bg = "black", fg="white")
-        onePassLenEntry.config(bg = "black", fg="white")
-        resultText.config(bg = "grey", fg="white")
+        onePassLenEntry.config(bg = "#adadad", fg="white")
+        resultText.config(bg = "#adadad", fg="white")
+        settings["theme"] = "dark"
+        with open(pp + "settings.json", "w") as f:
+            json.dump(settings, f)  
 
-generateButton = Button(window, text="Сгенерировать", width=58, command=generateButtonClick, bg="grey", fg="white")
+generateButton = Button(window, text="Сгенерировать", width=58, command=generateButtonClick, bg="#adadad", fg="white")
 generateButton.place(x=31, y=150)
 
-resultText = scrolledtext.ScrolledText(width=60, height=25, font=("Comic Sans MS", 9), bg="grey", fg="white")
+resultText = scrolledtext.ScrolledText(width=60, height=25, font=("Comic Sans MS", 9), bg="#adadad", fg="white")
 resultText.place(x=25, y=200)
+resultText.config(state=DISABLED)
 
-aboutButton = Button(window, text="О программе", width=15, command=aboutButtonClick, font=("Comic Sans MS", 9), bg="grey", fg="white")
+aboutButton = Button(window, text="О программе", width=15, command=aboutButtonClick, font=("Comic Sans MS", 9), bg="#adadad", fg="white")
 aboutButton.place(x=350, y=643)
 
-githublink = Button(window, text="Github", width=15, command=githubclick, font=("Comic Sans MS", 9), bg="grey", fg="white")
+githublink = Button(window, text="Github", width=15, command=githubclick, font=("Comic Sans MS", 9), bg="#adadad", fg="white")
 githublink.place(x=220, y=643)
 
-savebutton = Button(window, text="Сохранить результат", width=20, command=saveresult, font=("Comic Sans MS", 9), bg="grey", fg="white")
+savebutton = Button(window, text="Сохранить результат", width=20, command=saveresult, font=("Comic Sans MS", 9), bg="#adadad", fg="white")
 savebutton.place(x=60, y=643)
+savebutton.config(state=DISABLED)
 
-selecttheme = Checkbutton(window, text="Светлая тема", command=switchtheme, width=20, font=("Comic Sans MS", 9), bg="grey", fg="black", variable=themec, onvalue="ON", offvalue="OFF")
+selecttheme = Checkbutton(window, text="Светлая тема", command=switchtheme, width=20, font=("Comic Sans MS", 9), bg="#adadad", fg="black", variable=themec, onvalue="ON", offvalue="OFF")
 selecttheme.place(x=300, y=10)
-
-
+# print(settings)
+if settings["theme"] == 'light':
+    selecttheme.select()
+    switchtheme()
+    
 window.mainloop()
