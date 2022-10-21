@@ -5,7 +5,7 @@
 
 Написано на python с использованием tkinter
 
-![изображение](https://user-images.githubusercontent.com/104437646/166146390-452c476b-83ae-48a7-9aeb-d7e21acc7d88.png)
+![PassGenerator_v1 1 2_pEeJmI85e7](https://user-images.githubusercontent.com/104437646/197220979-12a62bfb-5c47-40e5-943a-3e03b25e112c.png)
 
 # Системные требования
 1. При запуске из .py файла
@@ -18,7 +18,7 @@
 
 2. При запуске из EXE файла
 
-   * ОС: Windows 10
+   * ОС: В зависимости от ОС, на которой была собрано приложение
 
    * Установка Python не требуется
 
