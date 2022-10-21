@@ -1,3 +1,4 @@
+# https://github.com/mrasdaf/PassGenerator
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog as fd
@@ -7,6 +8,7 @@ from tkinter import scrolledtext
 
 import json
 from os import path, getenv, mkdir
+
 
 pp = getenv('APPDATA') + "\\PassGenerator\\"
 if not path.isdir(getenv('APPDATA') + "\\PassGenerator"):
