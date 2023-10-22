@@ -32,3 +32,6 @@
    `pyinstaller -F -w -i icon.ico main.py`
 
 Полученный файл будет лежать в папке **dist**
+
+Ссылка на оригинальную иконку: https://www.pinclipart.com/maxpin/iRJTRx/
+
